@@ -62,46 +62,40 @@ namespace Chroma
 
 				case 0xF7B0:
 					int gameEvent = e.Message.Value<int>("event");
-	
-					// Status messages
-					if (gameEvent.Equals(0x028A)) // weenie errors https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/WeenieError.cs
-					{
-						int weenieError = Convert.ToInt32(e.Message[3]);
 
-						if (weenieError.Equals(0x0402)) // YourSpellFizzled = 0x0402
-						{
+					switch (gameEvent)
+					{
+						case 0x028A: //weenie errors. See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/WeenieError.cs
+							{
+								int weenieError = Convert.ToInt32(e.Message[3]);
+
+								if (weenieError.Equals(0x0402)) // YourSpellFizzled = 0x0402
+								{
+									PlayAnimation(ani_testAnim);
+								}
+
+								if (weenieError.Equals(0x003D)) // YouChargedTooFar = 0x003D
+								{
+									PlayAnimation(ani_testAnim);
+								}
+							}
+							break;
+
+						case 0x01C7: // action complete
+							PlayAnimation(ani_blank);
+							break;
+
+						case 0x01B2: // Receive Melee Damage
 							PlayAnimation(ani_testAnim);
-						}
+							break;
 
-						if (weenieError.Equals(0x003D)) // YouChargedTooFar = 0x003D
-						{
+						case 0x01B4: // Evade a Melee Attack
 							PlayAnimation(ani_testAnim);
-						}
+							break;
 
-					}
-
-					// Action complete
-					if (gameEvent.Equals(0x01C7))
-					{
-						PlayAnimation(ani_blank);
-					}
-
-					// Receive Melee Damage
-					if (gameEvent.Equals(0x01B2))
-					{
-						PlayAnimation(ani_testAnim);
-					}
-
-					// Evade a Melee Attack
-					if (gameEvent.Equals(0x01B4))
-					{
-						PlayAnimation(ani_testAnim);
-					}
-
-					// Character Died
-					if (gameEvent.Equals(0x01AC))
-					{
-						PlayAnimation(ani_testAnim);
+						case 0x01AC:
+							PlayAnimation(ani_testAnim);
+							break;
 					}
 					break;
 
@@ -118,59 +112,43 @@ namespace Chroma
 
 				case 0xF7B1:
 					int action = e.Message.Value<int>("action");
-
-					// Materialize character (including any portal taken)
-					if (action.Equals(0x00A1))
+					switch(action)
 					{
-						PlayAnimation(ani_blank);
-					}
+						case 0x00A1: // Materialize character (including any portal taken)
+							PlayAnimation(ani_blank);
+							break;
 
-					// Start casting a targeted spell
-					if (action.Equals(0x004A))
-					{
-						PlayAnimation(ani_spellcast);
-					}
+						case 0x004A: // Start casting a targeted spell
+							PlayAnimation(ani_spellcast);
+							break;
 
-					// Start casting an untargeted spell
-					if (action.Equals(0x0048))
-					{
-						PlayAnimation(ani_spellcast);
-					}
+						case 0x0048: // Start casting an untargeted spell
+							PlayAnimation(ani_spellcast);
+							break;
 
-					// Raise a skill
-					if (action.Equals(0x0046))
-					{
-						PlayAnimation(ani_raiseSkill);
-					}
+						case 0x0046: // Raise a skill
+							PlayAnimation(ani_raiseSkill);
+							break;
 
-					// Raise an attribute
-					if (action.Equals(0x0045))
-					{
-						PlayAnimation(ani_testAnim);
-					}
+						case 0x0045: // Raise an attribute
+							PlayAnimation(ani_testAnim);
+							break;
 
-					// Raise a vital
-					if (action.Equals(0x0044))
-					{
-						PlayAnimation(ani_testAnim);
-					}
+						case 0x0044: // Raise a vital
+							PlayAnimation(ani_testAnim);
+							break;
 
-					// Equip an item
-					if (action.Equals(0x001A))
-					{
-						PlayAnimation(ani_testAnim);
-					}
+						case 0x001A: // Equip an item
+							PlayAnimation(ani_testAnim);
+							break;
 
-					// Drop an item
-					if (action.Equals(0x001B))
-					{
-						PlayAnimation(ani_testAnim);
-					}
+						case 0x001B: // Drop an item
+							PlayAnimation(ani_testAnim);
+							break;
 
-					// Give an item
-					if (action.Equals(0x00CD))
-					{
-						PlayAnimation(ani_testAnim);
+						case 0x00CD: // Give an item
+							PlayAnimation(ani_testAnim);
+                            break; 
 					}
 					break;
 			}
