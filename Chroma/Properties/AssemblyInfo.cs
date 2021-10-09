@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Chroma")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AC Chroma")]
+[assembly: AssemblyDescription("Enables Chroma effect for Razer components when playing Asheron's Call.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Chroma")]
+[assembly: AssemblyCompany("Thwargle Games")]
+[assembly: AssemblyProduct("AC Chroma")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

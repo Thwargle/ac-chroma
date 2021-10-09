@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Chroma.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Portal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Damage1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Lifestone" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Blank" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Arrow1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Death" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/ParticlesOut_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Spellcast" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Llama1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Jump" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/CircleLarge_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Emote" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
