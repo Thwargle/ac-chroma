@@ -12,7 +12,7 @@ namespace Chroma.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace Chroma.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Damage1_Keyboard.chroma")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Spiral_Keyboard.chroma")]
         public string Portal {
             get {
                 return ((string)(this["Portal"]));
@@ -104,6 +104,30 @@ namespace Chroma.Properties {
             }
             set {
                 this["Emote"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Fork1_Keyboard.chroma")]
+        public string RaiseSkill {
+            get {
+                return ((string)(this["RaiseSkill"]));
+            }
+            set {
+                this["RaiseSkill"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Bolt4_Keyboard.chroma")]
+        public string TestAnim {
+            get {
+                return ((string)(this["TestAnim"]));
+            }
+            set {
+                this["TestAnim"] = value;
             }
         }
     }

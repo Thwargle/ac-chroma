@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Portal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Animations/Damage1_Keyboard.chroma</Value>
+      <Value Profile="(Default)">Animations/Spiral_Keyboard.chroma</Value>
     </Setting>
     <Setting Name="Lifestone" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>
@@ -22,6 +22,12 @@
     </Setting>
     <Setting Name="Emote" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="RaiseSkill" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Fork1_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="TestAnim" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Bolt4_Keyboard.chroma</Value>
     </Setting>
   </Settings>
 </SettingsFile>

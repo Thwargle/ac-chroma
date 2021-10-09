@@ -22,15 +22,24 @@ namespace Chroma
 		private int ani_death = -1;
 		private int ani_spellcast = -1;
 		private int ani_jump = -1;
+		private int ani_raiseSkill = -1;
+		private int ani_testAnim = -1;
 
 		// probably need some configs
-		const float Health_Low = 0.3f;
-		const float Health_Critical = 0.15f;
+		//const float Health_Low = 0.3f;
+		//const float Health_Critical = 0.15f;
 
 		protected override void Startup()
 		{
 			InitChromaApp();
+			InitAnims();
+			ServerDispatch += FilterCore_ServerDispatch;
+			ClientDispatch += FilterCore_ClientDispatch;
+			PlayAnimation(ani_portal);
+		}
 
+		private void InitAnims()
+		{
 			ani_blank = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Blank));
 			ani_lifestone = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Lifestone));
 			ani_emote = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Emote));
@@ -38,66 +47,142 @@ namespace Chroma
 			ani_death = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Death));
 			ani_spellcast = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Spellcast));
 			ani_jump = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Jump));
+			ani_raiseSkill = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.RaiseSkill));
+			ani_testAnim = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.TestAnim));
+		}
 
-			this.MessageProcessed += OnMessageProcessed;
+		// Parses server messages
+		private void FilterCore_ServerDispatch(object sender, NetworkMessageEventArgs e)
+		{
+			switch (e.Message.Type)
+			{
+				case 0xF751:
+					PlayAnimation(ani_portal);
+					break;
 
-			PlayAnimation(ani_portal);
+				case 0xF7B0:
+					int gameEvent = e.Message.Value<int>("event");
+	
+					// Status messages
+					if (gameEvent.Equals(0x028A)) // weenie errors https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/WeenieError.cs
+					{
+						int weenieError = Convert.ToInt32(e.Message[3]);
+
+						if (weenieError.Equals(0x0402)) // YourSpellFizzled = 0x0402
+						{
+							PlayAnimation(ani_testAnim);
+						}
+
+						if (weenieError.Equals(0x003D)) // YouChargedTooFar = 0x003D
+						{
+							PlayAnimation(ani_testAnim);
+						}
+
+					}
+
+					// Action complete
+					if (gameEvent.Equals(0x01C7))
+					{
+						PlayAnimation(ani_blank);
+					}
+
+					// Receive Melee Damage
+					if (gameEvent.Equals(0x01B2))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Evade a Melee Attack
+					if (gameEvent.Equals(0x01B4))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Character Died
+					if (gameEvent.Equals(0x01AC))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+					break;
+
+			}
+		}
+
+		// Parses client messages
+		private void FilterCore_ClientDispatch(object sender, NetworkMessageEventArgs e)
+		{
+
+			// GameAction
+			switch (e.Message.Type)
+			{
+
+				case 0xF7B1:
+					int action = e.Message.Value<int>("action");
+
+					// Materialize character (including any portal taken)
+					if (action.Equals(0x00A1))
+					{
+						PlayAnimation(ani_blank);
+					}
+
+					// Start casting a targeted spell
+					if (action.Equals(0x004A))
+					{
+						PlayAnimation(ani_spellcast);
+					}
+
+					// Start casting an untargeted spell
+					if (action.Equals(0x0048))
+					{
+						PlayAnimation(ani_spellcast);
+					}
+
+					// Raise a skill
+					if (action.Equals(0x0046))
+					{
+						PlayAnimation(ani_raiseSkill);
+					}
+
+					// Raise an attribute
+					if (action.Equals(0x0045))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Raise a vital
+					if (action.Equals(0x0044))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Equip an item
+					if (action.Equals(0x001A))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Drop an item
+					if (action.Equals(0x001B))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+
+					// Give an item
+					if (action.Equals(0x00CD))
+					{
+						PlayAnimation(ani_testAnim);
+					}
+					break;
+			}
+		
 		}
 
 		protected override void Shutdown()
 		{
-			this.MessageProcessed -= OnMessageProcessed;
-
+			ServerDispatch -= FilterCore_ServerDispatch;
+			ClientDispatch -= FilterCore_ClientDispatch;
+			ChromaStop();
 			ChromaAnimationAPI.Uninit();
-		}
-
-		[BaseEvent("MessageProcessed")]
-		private void OnMessageProcessed(object sender, MessageProcessedEventArgs e)
-		{
-			switch (e.Message.Type)
-			{
-				case 0xf74b: // exit portal
-					{
-						int obj = e.Message.Value<int>("object");
-						ushort flags = e.Message.Value<ushort>("portalType");
-
-						Debug.Print("Exit Portal: ID {0}, Type {1}", obj, flags);
-						if (obj == Core.CharacterFilter.Id && (flags & 0x4000) == 0)
-							PlayAnimation(ani_blank);
-					}
-					break;
-
-				case 0xf751: // enter portal
-					PlayAnimation(ani_portal);
-					break;
-
-				case 0x019E: // player killed
-					PlayAnimation(ani_death);
-					break;
-
-				case 0x01E2: // player emote
-					PlayAnimation(ani_emote);
-					break;
-
-				case 0xF7B1:
-					// player cast spell
-					if (Convert.ToInt32(e.Message["action"]) == 0x0048)
-					{
-						PlayAnimation(ani_spellcast);
-					}
-					break;
-
-				case 0x074E: 
-					// player jumping
-					int jumper = e.Message.Value<int>("object");
-
-					if (jumper == Core.CharacterFilter.Id)
-					{
-						PlayAnimation(ani_jump);
-						return;
-					}
-					break;
-			}
 		}
 
 		private void ChromaStop()
@@ -123,7 +208,12 @@ namespace Chroma
 
 		private void PlayAnimation(int animationId)
 		{
-			ChromaAnimationAPI.PlayAnimationLoop(animationId, true);
+			ChromaAnimationAPI.PlayAnimationLoop(animationId, false);
+		}
+
+		private void PlayAnimation(int animationId, bool loop)
+		{
+			ChromaAnimationAPI.PlayAnimationLoop(animationId, loop);
 		}
 
 		private void InitChromaApp()
