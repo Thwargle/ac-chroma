@@ -69,14 +69,15 @@ namespace Chroma
 							{
 								int weenieError = Convert.ToInt32(e.Message[3]);
 
-								if (weenieError.Equals(0x0402)) // YourSpellFizzled = 0x0402
+								switch (weenieError)
 								{
-									PlayAnimation(ani_testAnim);
-								}
+									case 0x0402: // YourSpellFizzled = 0x0402
+										PlayAnimation(ani_testAnim);
+										break;
 
-								if (weenieError.Equals(0x003D)) // YouChargedTooFar = 0x003D
-								{
-									PlayAnimation(ani_testAnim);
+									case 0x003D: // YouChargedTooFar = 0x003D
+										PlayAnimation(ani_testAnim);
+										break;
 								}
 							}
 							break;
@@ -93,7 +94,21 @@ namespace Chroma
 							PlayAnimation(ani_testAnim);
 							break;
 
-						case 0x01AC:
+						case 0x01AC: // Your Death
+							PlayAnimation(ani_testAnim);
+							break;
+					}
+					break;
+
+				case 0xF74A: // Inventory_PickupEvent. See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
+					PlayAnimation(ani_testAnim); 
+					break;
+
+				case 0xF755: // Effects_PlayScriptType
+					int scriptType = Convert.ToInt32(e.Message[1]);
+					switch (scriptType)
+					{
+						case 0x8A: //LevelUp
 							PlayAnimation(ani_testAnim);
 							break;
 					}
@@ -148,9 +163,14 @@ namespace Chroma
 
 						case 0x00CD: // Give an item
 							PlayAnimation(ani_testAnim);
-                            break; 
+                            break;
+
+						case 0x0063: // Character_TeleToLifestone
+							PlayAnimation(ani_portal);
+							break;
 					}
 					break;
+
 			}
 		
 		}
