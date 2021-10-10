@@ -24,7 +24,7 @@ namespace Chroma
 		private int ani_jump = -1;
 		private int ani_raiseSkill = -1;
 		private int ani_testAnim = -1;
-		private readonly int currentCharacterID = CoreManager.Current.CharacterFilter.Id;
+		private int currentCharacterID = -1;
 
 		// probably need some configs
 		//const float Health_Low = 0.3f;
@@ -37,6 +37,7 @@ namespace Chroma
 			ServerDispatch += FilterCore_ServerDispatch;
 			ClientDispatch += FilterCore_ClientDispatch;
 			PlayAnimation(ani_portal);
+			currentCharacterID = CoreManager.Current.CharacterFilter.Id;
 		}
 
 		private void InitAnims()
@@ -96,101 +97,104 @@ namespace Chroma
 					}
 					break;
 
-
 				case 0xF751: // Effects_PlayerTeleport
 					PlayAnimation(ani_portal);
 					break;
 
-
 				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
-					PlayAnimation(ani_testAnim); 
+					if (CheckIfMe(CoreManager.Current.CharacterFilter.Id))
+					{
+						PlayAnimation(ani_testAnim);
+					}
 					break;
-
 
 				// Playscripts
 				// See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
 				// TODO:  get our ID and ensure the effect is coming from us?
 				case 0xF755: // Effects_PlayScriptType
-					int scriptType = e.Message.Value<int>("effect");
-					switch (scriptType)
+					if (CheckIfMe(CoreManager.Current.CharacterFilter.Id)) //check if the effect is on the current player
 					{
-						case 0x8A: // LevelUp
-							PlayAnimation(ani_testAnim);
-							break;
+						int scriptType = e.Message.Value<int>("effect");
+						switch (scriptType)
+						{
+							case 0x8A: // LevelUp
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0x1F: // HealthUpRed (heal self)
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0x1F: // HealthUpRed (heal self)
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0x4B: // SwapHealth_Yellow_To_Red (stamina to health)
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0x4B: // SwapHealth_Yellow_To_Red (stamina to health)
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0x23: // HealthUpYellow (restam) (restam)
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0x23: // HealthUpYellow (restam) (restam)
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0x4C: // SwapHealth_Yellow_To_Blue (stamina to mana)
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0x4C: // SwapHealth_Yellow_To_Blue (stamina to mana)
+								PlayAnimation(ani_testAnim);
+								break;
 
 
 
 							// havent tested below this line
 
-						case 0xA1: //AetheriaLevelUp
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA1: //AetheriaLevelUp
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA2: // AetheriaSurgeDestruction
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA2: // AetheriaSurgeDestruction
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA3: // AetheriaSurgeProtection
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA3: // AetheriaSurgeProtection
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA4: // AetheriaSurgeRegeneration
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA4: // AetheriaSurgeRegeneration
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA5: // AetheriaSurgeAffliction
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA5: // AetheriaSurgeAffliction
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA6: // AetheriaSurgeFestering
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA6: // AetheriaSurgeFestering
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA7: // HealthDownVoid
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA7: // HealthDownVoid
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA8: // RegenDownVoid
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA8: // RegenDownVoid
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xA9: // SkillDownVoid
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xA9: // SkillDownVoid
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xAA: // DirtyFightingHealDebuff
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xAA: // DirtyFightingHealDebuff
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xAB: // DirtyFightingAttackDebuff
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xAB: // DirtyFightingAttackDebuff
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xAC: // DirtyFightingDefenseDebuff
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xAC: // DirtyFightingDefenseDebuff
+								PlayAnimation(ani_testAnim);
+								break;
 
-						case 0xAD: // DirtyFightingDamageOverTime
-							PlayAnimation(ani_testAnim);
-							break;
+							case 0xAD: // DirtyFightingDamageOverTime
+								PlayAnimation(ani_testAnim);
+								break;
 
 
+						}
 					}
 					break;
 
@@ -206,7 +210,7 @@ namespace Chroma
 
 				case 0xF7B1: // Network_OrderHdr
 					int action = e.Message.Value<int>("action");
-					switch(action)
+					switch (action)
 					{
 						case 0x00A1: // Materialize character (including any portal taken)
 							PlayAnimation(ani_blank);
@@ -242,7 +246,7 @@ namespace Chroma
 
 						case 0x00CD: // Give an item
 							PlayAnimation(ani_testAnim);
-                            break;
+							break;
 
 						case 0x0063: // Character_TeleToLifestone
 							PlayAnimation(ani_portal);
@@ -251,7 +255,7 @@ namespace Chroma
 					break;
 
 			}
-		
+
 		}
 
 		protected override void Shutdown()
@@ -291,6 +295,15 @@ namespace Chroma
 		private void PlayAnimation(int animationId, bool loop)
 		{
 			ChromaAnimationAPI.PlayAnimationLoop(animationId, loop);
+		}
+
+		private bool CheckIfMe(int myID)
+		{
+			if(myID == currentCharacterID)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		private void InitChromaApp()
