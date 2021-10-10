@@ -102,8 +102,11 @@ namespace Chroma
 					break;
 
 				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
-					if (CheckIfMe(e.Message.Value<int>("object")))
+					ToChat("About to pick up from ground.");
+					ToChat(Convert.ToInt32(e.Message[0]) + " is the Message[0].");
+					if (CheckIfMe(Convert.ToInt32(e.Message[0])))
 					{
+						ToChat("Picked up from ground.");
 						PlayAnimation(ani_testAnim);
 					}
 					break;
@@ -299,13 +302,17 @@ namespace Chroma
 
 		private bool CheckIfMe(int myID)
 		{
-			if(myID == currentCharacterID)
+			ToChat("My ID is: " + myID + ". The currentCharacterID is: " + currentCharacterID);
+			if (myID == currentCharacterID)
 			{
 				return true;
 			}
 			return false;
 		}
-
+		internal static void ToChat(string text)
+		{
+			CoreManager.Current.Actions.AddChatText(text, 5, 1);
+		}
 		private void InitChromaApp()
 		{
 			ChromaSDK.APPINFOTYPE appInfo = new APPINFOTYPE();
