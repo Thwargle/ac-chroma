@@ -102,7 +102,7 @@ namespace Chroma
 					break;
 
 				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
-					if (CheckIfMe(CoreManager.Current.CharacterFilter.Id))
+					if (CheckIfMe(e.Message.Value<int>("object")))
 					{
 						PlayAnimation(ani_testAnim);
 					}
@@ -112,7 +112,7 @@ namespace Chroma
 				// See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
 				// TODO:  get our ID and ensure the effect is coming from us?
 				case 0xF755: // Effects_PlayScriptType
-					if (CheckIfMe(CoreManager.Current.CharacterFilter.Id)) //check if the effect is on the current player
+					if (CheckIfMe(e.Message.Value<int>("object"))) //check if the effect is on the current player
 					{
 						int scriptType = e.Message.Value<int>("effect");
 						switch (scriptType)
