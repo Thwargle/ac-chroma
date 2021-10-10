@@ -37,7 +37,7 @@ namespace Chroma
 			ServerDispatch += FilterCore_ServerDispatch;
 			ClientDispatch += FilterCore_ClientDispatch;
 			PlayAnimation(ani_portal);
-			currentCharacterID = CoreManager.Current.CharacterFilter.Id;
+			CoreManager.Current.CharacterFilter.LoginComplete += CharacterFilter_LoginComplete;
 		}
 
 		private void InitAnims()
@@ -103,8 +103,7 @@ namespace Chroma
 
 				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
 					ToChat("About to pick up from ground.");
-					ToChat(Convert.ToInt32(e.Message[0]) + " is the Message[0].");
-					if (CheckIfMe(Convert.ToInt32(e.Message[0])))
+					if (CheckIfMe(e.Message.Value<int>("object"))) //check if the effect is on the current player
 					{
 						ToChat("Picked up from ground.");
 						PlayAnimation(ani_testAnim);
@@ -312,6 +311,11 @@ namespace Chroma
 		internal static void ToChat(string text)
 		{
 			CoreManager.Current.Actions.AddChatText(text, 5, 1);
+		}
+
+		private void CharacterFilter_LoginComplete(object sender, EventArgs e)
+		{
+			currentCharacterID = CoreManager.Current.CharacterFilter.Id;
 		}
 		private void InitChromaApp()
 		{
