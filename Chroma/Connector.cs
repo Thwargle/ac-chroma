@@ -24,6 +24,7 @@ namespace Chroma
 		private int ani_jump = -1;
 		private int ani_raiseSkill = -1;
 		private int ani_testAnim = -1;
+		private readonly int currentCharacterID = CoreManager.Current.CharacterFilter.Id;
 
 		// probably need some configs
 		//const float Health_Low = 0.3f;
@@ -56,19 +57,14 @@ namespace Chroma
 		{
 			switch (e.Message.Type)
 			{
-				case 0xF751:
-					PlayAnimation(ani_portal);
-					break;
-
-				case 0xF7B0:
+				case 0xF7B0: // Network_WOrderHdr
 					int gameEvent = e.Message.Value<int>("event");
 
 					switch (gameEvent)
 					{
 						case 0x028A: //weenie errors. See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/WeenieError.cs
 							{
-								int weenieError = Convert.ToInt32(e.Message[3]);
-
+								int weenieError = e.Message.Value<int>("type");
 								switch (weenieError)
 								{
 									case 0x0402: // YourSpellFizzled = 0x0402
@@ -100,17 +96,101 @@ namespace Chroma
 					}
 					break;
 
-				case 0xF74A: // Inventory_PickupEvent. See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
+
+				case 0xF751: // Effects_PlayerTeleport
+					PlayAnimation(ani_portal);
+					break;
+
+
+				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
 					PlayAnimation(ani_testAnim); 
 					break;
 
+
+				// Playscripts
+				// See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
+				// TODO:  get our ID and ensure the effect is coming from us?
 				case 0xF755: // Effects_PlayScriptType
-					int scriptType = Convert.ToInt32(e.Message[1]);
+					int scriptType = e.Message.Value<int>("effect");
 					switch (scriptType)
 					{
-						case 0x8A: //LevelUp
+						case 0x8A: // LevelUp
 							PlayAnimation(ani_testAnim);
 							break;
+
+						case 0x1F: // HealthUpRed (heal self)
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0x4B: // SwapHealth_Yellow_To_Red (stamina to health)
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0x23: // HealthUpYellow (restam) (restam)
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0x4C: // SwapHealth_Yellow_To_Blue (stamina to mana)
+							PlayAnimation(ani_testAnim);
+							break;
+
+
+
+							// havent tested below this line
+
+						case 0xA1: //AetheriaLevelUp
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA2: // AetheriaSurgeDestruction
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA3: // AetheriaSurgeProtection
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA4: // AetheriaSurgeRegeneration
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA5: // AetheriaSurgeAffliction
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA6: // AetheriaSurgeFestering
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA7: // HealthDownVoid
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA8: // RegenDownVoid
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xA9: // SkillDownVoid
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xAA: // DirtyFightingHealDebuff
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xAB: // DirtyFightingAttackDebuff
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xAC: // DirtyFightingDefenseDebuff
+							PlayAnimation(ani_testAnim);
+							break;
+
+						case 0xAD: // DirtyFightingDamageOverTime
+							PlayAnimation(ani_testAnim);
+							break;
+
+
 					}
 					break;
 
@@ -120,12 +200,11 @@ namespace Chroma
 		// Parses client messages
 		private void FilterCore_ClientDispatch(object sender, NetworkMessageEventArgs e)
 		{
-
 			// GameAction
 			switch (e.Message.Type)
 			{
 
-				case 0xF7B1:
+				case 0xF7B1: // Network_OrderHdr
 					int action = e.Message.Value<int>("action");
 					switch(action)
 					{
