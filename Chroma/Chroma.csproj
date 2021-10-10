@@ -726,7 +726,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Animations\PortalSpace_Keyboard.chroma" />
+    <Content Include="Animations\PortalSpace_Keyboard.chroma">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

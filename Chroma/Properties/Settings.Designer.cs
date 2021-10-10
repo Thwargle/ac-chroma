@@ -25,7 +25,7 @@ namespace Chroma.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Spiral_Keyboard.chroma")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/PortalSpace_Keyboard.chroma")]
         public string Portal {
             get {
                 return ((string)(this["Portal"]));

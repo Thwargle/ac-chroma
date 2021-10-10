@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Portal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Animations/Spiral_Keyboard.chroma</Value>
+      <Value Profile="(Default)">Animations/PortalSpace_Keyboard.chroma</Value>
     </Setting>
     <Setting Name="Lifestone" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>

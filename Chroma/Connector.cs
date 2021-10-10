@@ -298,7 +298,7 @@ namespace Chroma
 			ChromaSDK.APPINFOTYPE appInfo = new APPINFOTYPE();
 			appInfo.Title = "AC Chroma Connect";
 			appInfo.Description = "AC Chroma Effects";
-			appInfo.Author_Name = "Paradox, Thwargle";
+			appInfo.Author_Name = "Paradox, Thwargle, Hells";
 			appInfo.Author_Contact = "https://paradoxlost.com";
 
 			//appInfo.SupportedDevice = 
