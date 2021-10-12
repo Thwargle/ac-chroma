@@ -49,7 +49,7 @@ namespace Chroma.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Arrow1_Keyboard.chroma")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/AC_Default_Keybinds.chroma")]
         public string Blank {
             get {
                 return ((string)(this["Blank"]));
