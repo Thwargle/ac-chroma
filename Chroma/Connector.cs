@@ -30,6 +30,11 @@ namespace Chroma
 		//const float Health_Low = 0.3f;
 		//const float Health_Critical = 0.15f;
 
+
+	//int obj = e.Message.Value<int>("object");
+	//if (obj == Core.CharacterFilter.Id)
+	
+
 		protected override void Startup()
 		{
 			InitChromaApp();
@@ -56,6 +61,8 @@ namespace Chroma
 		// Parses server messages
 		private void FilterCore_ServerDispatch(object sender, NetworkMessageEventArgs e)
 		{
+			int obj = e.Message.Value<int>("object");
+
 			switch (e.Message.Type)
 			{
 				case 0xF7B0: // Network_WOrderHdr
@@ -101,20 +108,20 @@ namespace Chroma
 					PlayAnimation(ani_portal);
 					break;
 
-				case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
-					ToChat("About to pick up from ground.");
-					if (CheckIfMe(e.Message.Value<int>("object"))) //check if the effect is on the current player
-					{
-						ToChat("Picked up from ground.");
-						PlayAnimation(ani_testAnim);
-					}
-					break;
+				//case 0xF74A: // Inventory_PickupEvent.  -- only affects pickup from ground.
+				//	ToChat("About to pick up from ground.");
+				//	if (CheckIfMe(obj)) //check if the effect is on the current player
+				//	{
+				//		ToChat("Picked up from ground.");
+				//		PlayAnimation(ani_testAnim);
+				//	}
+				//	break;
 
 				// Playscripts
 				// See: https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/PlayScript.cs
 				// TODO:  get our ID and ensure the effect is coming from us?
 				case 0xF755: // Effects_PlayScriptType
-					if (CheckIfMe(e.Message.Value<int>("object"))) //check if the effect is on the current player
+					if (CheckIfMe(obj)) //check if the effect is on the current player
 					{
 						int scriptType = e.Message.Value<int>("effect");
 						switch (scriptType)
@@ -299,10 +306,10 @@ namespace Chroma
 			ChromaAnimationAPI.PlayAnimationLoop(animationId, loop);
 		}
 
-		private bool CheckIfMe(int myID)
+		private bool CheckIfMe(int objID)
 		{
-			ToChat("My ID is: " + myID + ". The currentCharacterID is: " + currentCharacterID);
-			if (myID == currentCharacterID)
+			ToChat("ObjectID is: " + objID + " || currentCharacterID is: " + currentCharacterID);
+			if (objID == currentCharacterID)
 			{
 				return true;
 			}
@@ -315,7 +322,10 @@ namespace Chroma
 
 		private void CharacterFilter_LoginComplete(object sender, EventArgs e)
 		{
-			currentCharacterID = CoreManager.Current.CharacterFilter.Id;
+
+			currentCharacterID = Core.CharacterFilter.Id;
+			ToChat("AC Chroma Connector Initialized");
+			ToChat("My character ID is: " + currentCharacterID.ToString());
 		}
 		private void InitChromaApp()
 		{
