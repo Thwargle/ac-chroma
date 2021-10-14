@@ -130,5 +130,17 @@ namespace Chroma.Properties {
                 this["TestAnim"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Rainbow_Keyboard.chroma")]
+        public string LevelUp {
+            get {
+                return ((string)(this["LevelUp"]));
+            }
+            set {
+                this["LevelUp"] = value;
+            }
+        }
     }
 }

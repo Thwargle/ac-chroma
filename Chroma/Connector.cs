@@ -24,6 +24,7 @@ namespace Chroma
 		private int ani_jump = -1;
 		private int ani_raiseSkill = -1;
 		private int ani_testAnim = -1;
+		private int ani_levelUp = -1;
 		private int currentCharacterID = -1;
 
 		// probably need some configs
@@ -56,6 +57,7 @@ namespace Chroma
 			ani_jump = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Jump));
 			ani_raiseSkill = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.RaiseSkill));
 			ani_testAnim = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.TestAnim));
+			ani_levelUp = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.LevelUp));
 		}
 
 		// Parses server messages
@@ -127,7 +129,7 @@ namespace Chroma
 						switch (scriptType)
 						{
 							case 0x8A: // LevelUp
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_levelUp);
 								break;
 
 							case 0x1F: // HealthUpRed (heal self)
@@ -222,7 +224,7 @@ namespace Chroma
 					switch (action)
 					{
 						case 0x00A1: // Materialize character (including any portal taken)
-							PlayAnimation(ani_blank);
+							PlayAnimation(ani_levelUp);
 							break;
 
 						case 0x004A: // Start casting a targeted spell

@@ -29,5 +29,8 @@
     <Setting Name="TestAnim" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/Bolt4_Keyboard.chroma</Value>
     </Setting>
+    <Setting Name="LevelUp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/Rainbow_Keyboard.chroma</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
