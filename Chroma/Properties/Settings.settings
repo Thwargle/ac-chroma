@@ -30,7 +30,25 @@
       <Value Profile="(Default)">Animations/Bolt4_Keyboard.chroma</Value>
     </Setting>
     <Setting Name="LevelUp" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Animations/Rainbow_Keyboard.chroma</Value>
+      <Value Profile="(Default)">Animations/LevelUp_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="HealSelf" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/HealSelf_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Yellow_To_Blue" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/SwapHealth_Yellow_To_Blue_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="Yellow_To_Red" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/SwapHealth_Yellow_To_Red_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="MaxLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/WeddingBliss_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="HealthUpYellow" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/HealthUpYellow_Keyboard.chroma</Value>
+    </Setting>
+    <Setting Name="AethLevelUp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Animations/AetheriaLevelUp_Keyboard</Value>
     </Setting>
   </Settings>
 </SettingsFile>

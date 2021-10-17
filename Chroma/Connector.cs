@@ -25,6 +25,14 @@ namespace Chroma
 		private int ani_raiseSkill = -1;
 		private int ani_testAnim = -1;
 		private int ani_levelUp = -1;
+		private int ani_healself = -1;
+		private int ani_healthupyellow = -1;
+		private int ani_yellowtoblue = -1;
+		private int ani_yellowtored = -1;
+		private int ani_maxlevel = -1;
+		private int ani_aethlevelup = -1;
+
+
 		private int currentCharacterID = -1;
 
 		// probably need some configs
@@ -32,9 +40,9 @@ namespace Chroma
 		//const float Health_Critical = 0.15f;
 
 
-	//int obj = e.Message.Value<int>("object");
-	//if (obj == Core.CharacterFilter.Id)
-	
+		//int obj = e.Message.Value<int>("object");
+		//if (obj == Core.CharacterFilter.Id)
+
 
 		protected override void Startup()
 		{
@@ -58,6 +66,12 @@ namespace Chroma
 			ani_raiseSkill = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.RaiseSkill));
 			ani_testAnim = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.TestAnim));
 			ani_levelUp = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.LevelUp));
+			ani_healself = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.HealSelf));
+			ani_healthupyellow = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.HealthUpYellow));
+			ani_yellowtoblue = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Yellow_To_Blue));
+			ani_yellowtored = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Yellow_To_Red));
+			ani_maxlevel = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.MaxLevel));
+			ani_aethlevelup = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.AethLevelUp));
 		}
 
 		// Parses server messages
@@ -128,24 +142,29 @@ namespace Chroma
 						int scriptType = e.Message.Value<int>("effect");
 						switch (scriptType)
 						{
+
 							case 0x8A: // LevelUp
 								PlayAnimation(ani_levelUp);
 								break;
 
+							case 0x8D: // WeddingBliss (MaxLevel)
+								PlayAnimation(ani_maxlevel);
+								break;
+
 							case 0x1F: // HealthUpRed (heal self)
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_healself);
 								break;
 
 							case 0x4B: // SwapHealth_Yellow_To_Red (stamina to health)
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_yellowtored);
 								break;
 
 							case 0x23: // HealthUpYellow (restam) (restam)
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_healthupyellow);
 								break;
 
 							case 0x4C: // SwapHealth_Yellow_To_Blue (stamina to mana)
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_yellowtoblue);
 								break;
 
 
@@ -153,7 +172,7 @@ namespace Chroma
 							// havent tested below this line
 
 							case 0xA1: //AetheriaLevelUp
-								PlayAnimation(ani_testAnim);
+								PlayAnimation(ani_aethlevelup);
 								break;
 
 							case 0xA2: // AetheriaSurgeDestruction

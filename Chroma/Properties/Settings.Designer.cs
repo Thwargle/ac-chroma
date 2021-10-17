@@ -133,13 +133,85 @@ namespace Chroma.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Animations/Rainbow_Keyboard.chroma")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/LevelUp_Keyboard.chroma")]
         public string LevelUp {
             get {
                 return ((string)(this["LevelUp"]));
             }
             set {
                 this["LevelUp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/HealSelf_Keyboard.chroma")]
+        public string HealSelf {
+            get {
+                return ((string)(this["HealSelf"]));
+            }
+            set {
+                this["HealSelf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/SwapHealth_Yellow_To_Blue_Keyboard.chroma")]
+        public string Yellow_To_Blue {
+            get {
+                return ((string)(this["Yellow_To_Blue"]));
+            }
+            set {
+                this["Yellow_To_Blue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/SwapHealth_Yellow_To_Red_Keyboard.chroma")]
+        public string Yellow_To_Red {
+            get {
+                return ((string)(this["Yellow_To_Red"]));
+            }
+            set {
+                this["Yellow_To_Red"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/WeddingBliss_Keyboard.chroma")]
+        public string MaxLevel {
+            get {
+                return ((string)(this["MaxLevel"]));
+            }
+            set {
+                this["MaxLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/HealthUpYellow_Keyboard.chroma")]
+        public string HealthUpYellow {
+            get {
+                return ((string)(this["HealthUpYellow"]));
+            }
+            set {
+                this["HealthUpYellow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Animations/AetheriaLevelUp_Keyboard")]
+        public string AethLevelUp {
+            get {
+                return ((string)(this["AethLevelUp"]));
+            }
+            set {
+                this["AethLevelUp"] = value;
             }
         }
     }
