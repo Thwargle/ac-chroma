@@ -15,7 +15,7 @@ namespace Chroma
 	[FriendlyName("AC Chroma Connect")]
 	public class Connector : PluginBase
 	{
-		private int ani_blank = -1;
+		private int ani_keybinds = -1;
 		private int ani_portal = -1;
 		private int ani_lifestone = -1;
 		private int ani_emote = -1;
@@ -31,6 +31,7 @@ namespace Chroma
 		private int ani_yellowtored = -1;
 		private int ani_maxlevel = -1;
 		private int ani_aethlevelup = -1;
+	
 
 
 		private int currentCharacterID = -1;
@@ -56,7 +57,7 @@ namespace Chroma
 
 		private void InitAnims()
 		{
-			ani_blank = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Blank));
+			ani_keybinds = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Keybinds));
 			ani_lifestone = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Lifestone));
 			ani_emote = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Emote));
 			ani_portal = ChromaAnimationAPI.GetAnimation(System.IO.Path.Combine(this.Path, Properties.Settings.Default.Portal));
@@ -103,7 +104,7 @@ namespace Chroma
 							break;
 
 						case 0x01C7: // action complete
-							PlayAnimation(ani_blank);
+							PlayAnimation(ani_keybinds);
 							break;
 
 						case 0x01B2: // Receive Melee Damage
@@ -243,7 +244,7 @@ namespace Chroma
 					switch (action)
 					{
 						case 0x00A1: // Materialize character (including any portal taken)
-							PlayAnimation(ani_levelUp);
+							PlayAnimation(ani_keybinds);
 							break;
 
 						case 0x004A: // Start casting a targeted spell

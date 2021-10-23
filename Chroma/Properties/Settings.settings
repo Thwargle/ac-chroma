@@ -8,7 +8,7 @@
     <Setting Name="Lifestone" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/OutParticle1_Keyboard.chroma</Value>
     </Setting>
-    <Setting Name="Blank" Type="System.String" Scope="User">
+    <Setting Name="Keybinds" Type="System.String" Scope="User">
       <Value Profile="(Default)">Animations/AC_Default_Keybinds.chroma</Value>
     </Setting>
     <Setting Name="Death" Type="System.String" Scope="User">

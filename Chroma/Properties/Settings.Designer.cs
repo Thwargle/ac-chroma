@@ -50,12 +50,12 @@ namespace Chroma.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Animations/AC_Default_Keybinds.chroma")]
-        public string Blank {
+        public string Keybinds {
             get {
-                return ((string)(this["Blank"]));
+                return ((string)(this["Keybinds"]));
             }
             set {
-                this["Blank"] = value;
+                this["Keybinds"] = value;
             }
         }
         
